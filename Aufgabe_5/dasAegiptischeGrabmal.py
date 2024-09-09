@@ -11,13 +11,27 @@ while (userInput != "fertig"):
         block = bl.Block(userInput)
         listOfBlocks.append(block)
 
+
+    
+
 # Setzt die Zeit immer um 1 Hoch für jedes Objekt einzeln
 def time():
     for i in range(len(listOfBlocks)):
         listOfBlocks[i].time = listOfBlocks[i].time +1
         print(listOfBlocks[i].time)
         listOfBlocks[i].checkStatues()
-    pass
+        moving()
+
+def moving():
+    print("try moving")
+    movedTiles = int(0)
+    while (listOfBlocks[movedTiles].closed == False):
+        movedTiles = movedTiles + 1
+        print("moved" "Moved Tiles: " + str(movedTiles))
+        if movedTiles == len(listOfBlocks):
+            print("Finished")
+            break
+        
 
 while keyboard.read_key() != "e":
     if keyboard.read_key() == "q":

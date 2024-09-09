@@ -11,8 +11,8 @@ class Block():
     def checkStatues(self):
         if self.time % self.interval == 0:
             if self.time/self.interval%2 == 0:
-                self.closed == True
+                self.closed = True
                 print("closed")
             else:
-                self.closed == False
+                self.closed = False
                 print("open")
