@@ -35,7 +35,7 @@ def find_best_routes(ranges):
     
     return best_count, best_combinations
 
-filename = 'wandern4.txt'
+filename = 'wandern1.txt'
 
 n, ranges = parse_data(filename)
 
