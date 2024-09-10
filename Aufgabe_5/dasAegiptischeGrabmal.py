@@ -28,7 +28,7 @@ def checkPosition(position):
     else:
         return(False)
     
-
+    
 def moving():
     print("try moving")
     movedTiles = int(0)
