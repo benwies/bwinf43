@@ -31,7 +31,6 @@ def checkPosition(position):
     
 def moving():
     print("try moving")
-    movedTiles = int(0)
     while (listOfBlocks[movedTiles].closed == False):
         movedTiles = movedTiles + 1
         print("moved" "Moved Tiles: " + str(movedTiles))
