@@ -28,7 +28,6 @@ def checkPosition(position):
     else:
         return(False)
     
-def 
 
 def moving():
     print("try moving")
