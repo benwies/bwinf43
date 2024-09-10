@@ -21,6 +21,14 @@ def time():
         print(listOfBlocks[i].time)
         listOfBlocks[i].checkStatues()
         moving()
+        
+def checkPosition(position):
+    if listOfBlocks[position].closed == True:
+        return(True)
+    else:
+        return(False)
+    
+def 
 
 def moving():
     print("try moving")
