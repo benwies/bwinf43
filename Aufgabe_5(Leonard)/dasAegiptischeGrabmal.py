@@ -1,6 +1,6 @@
 import keyboard
 import Block as bl
-import Aufgabe_5.Action as po
+import Action as po
 
 listOfBlocks = []
 listOfActions = []
