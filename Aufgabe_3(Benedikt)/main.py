@@ -15,7 +15,7 @@ ascii_art = """
 def menü_anzeigen():
     os.system('clear' if os.name == 'posix' else 'cls') 
     print(ascii_art)
-    print("Bitte wählen Sie eine Option:")
+    print("Bitte wählen Sie e^^ine Option:")
     print("1. Datei scannen und auswählen")
     print("2. Beenden")
 
