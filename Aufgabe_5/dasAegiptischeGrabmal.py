@@ -1,6 +1,6 @@
 import keyboard
 import Block as bl
-import Position as po
+import Aufgabe_5.Action as po
 
 listOfBlocks = []
 listOfActions = []
@@ -28,25 +28,24 @@ def checkPosition(position):
         return(False)
     
     
-def moving():
-    global movedTiles
-    print("try moving")
-    while (listOfBlocks[movedTiles].closed == False):
-        movedTiles = movedTiles + 1
-        print("moved" "Moved Tiles: " + str(movedTiles))
-        if movedTiles == len(listOfBlocks):
-            print("Finished")
-            break
+# def moving():
+#     global movedTiles
+#     print("try moving")
+#     while (listOfBlocks[movedTiles].closed == False):
+#         movedTiles = movedTiles + 1
+#         print("moved" "Moved Tiles: " + str(movedTiles))
+#         if movedTiles == len(listOfBlocks):
+#             print("Finished")
+#             break
         
 def time():
     for i in range(len(listOfBlocks)):
         listOfBlocks[i].time = listOfBlocks[i].time + 1
         print(listOfBlocks[i].time)
-        listOfBlocks[i].checkStatues()
-        moving()        
+        listOfBlocks[i].checkStatues()       
 
-while keyboard.read_key() != "e":
-    if keyboard.read_key() == "q":
-        time()
+# while keyboard.read_key() != "e":
+#     if keyboard.read_key() == "q":
+#         time()
         
 

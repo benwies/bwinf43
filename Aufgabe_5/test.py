@@ -1,6 +1,5 @@
-x = "awesome"
+x = 1
 
-def myfunc():
-  print("Python is " + x)
-
-myfunc()
+x += 10
+x += 9
+print(x)
