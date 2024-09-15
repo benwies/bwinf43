@@ -1,10 +1,7 @@
-#greedy algorithm
-
 import sys
 import os
 
-sys.stdout.reconfigure(encoding='utf-8')
-
+# ASCII-Art für die grafische Benutzeroberfläche
 ascii_art = """
 ██╗    ██╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗ ████████╗ █████╗  ██████╗ 
 ██║    ██║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██╔══██╗██╔════╝ 
@@ -15,14 +12,21 @@ ascii_art = """
 """
 
 def menü_anzeigen():
+    """
+    Zeigt das Hauptmenü des Programms an und ermöglicht die Auswahl von Optionen.
+    """
     os.system('clear' if os.name == 'posix' else 'cls')
+    sys.stdout.reconfigure(encoding='utf-8')  # Setzt die Kodierung auf UTF-8, um Sonderzeichen korrekt darzustellen
     print(ascii_art)
     print("Bitte wählen Sie eine Option:")
     print("1. Datei scannen und auswählen")
     print("2. Beenden")
 
-
 def option_1():
+    """
+    Liest eine Textdatei ein, die Streckenlängen und Teilnehmerinformationen enthält.
+    Verarbeitet diese Daten mithilfe des Greedy-Algorithmus und zeigt die Ergebnisse an.
+    """
     dateien = [f for f in os.listdir('.') if f.endswith('.txt')]
     if not dateien:
         print("Keine Textdateien im Verzeichnis gefunden.")
@@ -49,10 +53,8 @@ def option_1():
             print("Teilnehmende Personen:", list(teilnehmer))
 
             for strecke in strecken:
-                min_strecke = strecke
-                max_strecke = strecke
                 teilnehmer_bei_strecke = teilnehmer_zahlen(strecke, personen)
-                print(f"Strecke {strecke}: Min: {min_strecke}, Max: {max_strecke}, Teilnehmende Personen: {teilnehmer_bei_strecke}")
+                print(f"Strecke {strecke}: Teilnehmende Personen: {teilnehmer_bei_strecke}")
 
         else:
             print("Ungültige Auswahl.")
@@ -62,12 +64,28 @@ def option_1():
     input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
 
 def option_2():
+    """
+    Beendet das Programm.
+    """
     print("Programm wird beendet. Auf Wiedersehen!")
 
 def teilnehmer_zahlen(strecke, personen):
+    """
+    Bestimmt die Teilnehmer, deren Streckenbereich die angegebene Strecke umfasst.
+
+    :param strecke: Die zu überprüfende Strecke
+    :param personen: Liste von Tupeln, die die Bereichsgrenzen für die Streckenlängen der Teilnehmer enthalten
+    :return: Liste von Indizes der Teilnehmer, deren Streckenbereich die angegebene Strecke umfasst
+    """
     return [i for i, (min_strecke, max_strecke) in enumerate(personen) if min_strecke <= strecke <= max_strecke]
 
 def greedy_algorithm(personen):
+    """
+    Führt den Greedy-Algorithmus aus, um eine Auswahl von Streckenlängen zu bestimmen, die möglichst viele Teilnehmer abdecken.
+
+    :param personen: Liste von Tupeln, die die Bereichsgrenzen für die Streckenlängen der Teilnehmer enthalten
+    :return: Tuple aus zwei Listen, wobei die erste die gewählten Streckenlängen und die zweite die abgedeckten Teilnehmerindizes enthält
+    """
     gewählte_strecken = []
     abgedeckte_personen = set()
 
@@ -98,6 +116,9 @@ def greedy_algorithm(personen):
     return gewählte_strecken, abgedeckte_personen
 
 def main():
+    """
+    Hauptfunktion, die das Programm steuert. Sie zeigt das Menü an und verarbeitet die Benutzerwahl.
+    """
     while True:
         menü_anzeigen()
         try:
