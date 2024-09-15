@@ -1,7 +1,9 @@
 #greedy algorithm
 
-
+import sys
 import os
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 ascii_art = """
 ██╗    ██╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗ ████████╗ █████╗  ██████╗ 
@@ -13,11 +15,12 @@ ascii_art = """
 """
 
 def menü_anzeigen():
-    os.system('clear' if os.name == 'posix' else 'cls') 
+    os.system('clear' if os.name == 'posix' else 'cls')
     print(ascii_art)
-    print("Bitte wählen Sie e^^ine Option:")
+    print("Bitte wählen Sie eine Option:")
     print("1. Datei scannen und auswählen")
     print("2. Beenden")
+
 
 def option_1():
     dateien = [f for f in os.listdir('.') if f.endswith('.txt')]
