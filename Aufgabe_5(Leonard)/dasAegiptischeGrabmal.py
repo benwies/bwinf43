@@ -17,35 +17,9 @@ while (userInput != "fertig"):
 
 
     
-
-# Setzt die Zeit immer um 1 Hoch für jedes Objekt einzeln
+    
 
         
-def checkPosition(position):
-    if listOfBlocks[position].closed == True:
-        return(True)
-    else:
-        return(False)
-    
-    
-# def moving():
-#     global movedTiles
-#     print("try moving")
-#     while (listOfBlocks[movedTiles].closed == False):
-#         movedTiles = movedTiles + 1
-#         print("moved" "Moved Tiles: " + str(movedTiles))
-#         if movedTiles == len(listOfBlocks):
-#             print("Finished")
-#             break
-        
-def time():
-    for i in range(len(listOfBlocks)):
-        listOfBlocks[i].time = listOfBlocks[i].time + 1
-        print(listOfBlocks[i].time)
-        listOfBlocks[i].checkStatues()       
 
-# while keyboard.read_key() != "e":
-#     if keyboard.read_key() == "q":
-#         time()
         
 

@@ -1,7 +1,7 @@
 from dasAegiptischeGrabmal import listOfBlocks
 import Block
 
-class Action():
+class Player():
     def __init__(self):
         self.position = int
         self.waited = int
@@ -20,5 +20,5 @@ class Action():
                 open += 1
             else:
                 return(open)
-            #test
+            
             
