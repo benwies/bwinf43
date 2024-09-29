@@ -2,21 +2,16 @@ import sys
 import os
 import subprocess
 
-# Function to open the script in a new terminal (Command Prompt) on Windows
 def open_in_new_terminal():
-    if os.name == 'nt':  # Windows
+    if os.name == 'nt':  
         script_path = os.path.abspath(__file__)
         script_dir = os.path.dirname(script_path)
-        # Use '/D' to switch to the directory containing the script
         subprocess.run(['start', 'cmd', '/k', f'cd /D {script_dir} && python {script_path}'], shell=True)
-        sys.exit()  # Exit the current script since it's now running in a new terminal
+        sys.exit() 
 
-# Run this check at the start of the script
 if __name__ == "__main__":
-    if os.name == 'nt' and not sys.stdin.isatty():  # Only open if not already in a terminal
+    if os.name == 'nt' and not sys.stdin.isatty(): 
         open_in_new_terminal()
-
-# ASCII Art and Main Logic Here...
 
 ascii_art = """
 ██╗    ██╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗ ████████╗ █████╗  ██████╗ 
@@ -36,7 +31,6 @@ def menü_anzeigen():
 
 
 def option_1():
-    # Explicitly use the directory of the script as the current directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
     dateien = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
     
