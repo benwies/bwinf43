@@ -1,9 +1,22 @@
-#greedy algorithm
-
 import sys
 import os
+import subprocess
 
-sys.stdout.reconfigure(encoding='utf-8')
+# Function to open the script in a new terminal (Command Prompt) on Windows
+def open_in_new_terminal():
+    if os.name == 'nt':  # Windows
+        script_path = os.path.abspath(__file__)
+        script_dir = os.path.dirname(script_path)
+        # Use '/D' to switch to the directory containing the script
+        subprocess.run(['start', 'cmd', '/k', f'cd /D {script_dir} && python {script_path}'], shell=True)
+        sys.exit()  # Exit the current script since it's now running in a new terminal
+
+# Run this check at the start of the script
+if __name__ == "__main__":
+    if os.name == 'nt' and not sys.stdin.isatty():  # Only open if not already in a terminal
+        open_in_new_terminal()
+
+# ASCII Art and Main Logic Here...
 
 ascii_art = """
 ██╗    ██╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗ ████████╗ █████╗  ██████╗ 
@@ -11,11 +24,11 @@ ascii_art = """
 ██║ █╗ ██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝   ██║   ███████║██║  ███╗
 ██║███╗██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗   ██║   ██╔══██║██║   ██║
 ╚███╔███╔╝██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║   ██║   ██║  ██║╚██████╔╝
- ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝                                                                  
+ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝                                                                  
 """
 
 def menü_anzeigen():
-    os.system('clear' if os.name == 'posix' else 'cls')
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(ascii_art)
     print("Bitte wählen Sie eine Option:")
     print("1. Datei scannen und auswählen")
@@ -23,7 +36,10 @@ def menü_anzeigen():
 
 
 def option_1():
-    dateien = [f for f in os.listdir('.') if f.endswith('.txt')]
+    # Explicitly use the directory of the script as the current directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    dateien = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
+    
     if not dateien:
         print("Keine Textdateien im Verzeichnis gefunden.")
         input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
@@ -36,15 +52,15 @@ def option_1():
     try:
         auswahl = int(input("\nGeben Sie die Nummer der Datei ein, die verarbeitet werden soll: "))
         if 1 <= auswahl <= len(dateien):
-            dateipfad = dateien[auswahl - 1]
+            dateipfad = os.path.join(script_dir, dateien[auswahl - 1])
             with open(dateipfad, 'r') as datei:
                 zeilen = datei.readlines()
                 eintragsanzahl = int(zeilen[0].strip())
                 personen = [tuple(map(int, zeile.strip().split())) for zeile in zeilen[1:eintragsanzahl + 1]]
-            
+
             print("\nVerarbeite Datei:", dateipfad)
             strecken, teilnehmer = greedy_algorithm(personen)
-            
+
             print("Gewählte Streckenlängen:", strecken)
             print("Teilnehmende Personen:", list(teilnehmer))
 
@@ -58,14 +74,17 @@ def option_1():
             print("Ungültige Auswahl.")
     except ValueError:
         print("Ungültige Eingabe.")
-    
+
     input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
+
 
 def option_2():
     print("Programm wird beendet. Auf Wiedersehen!")
 
+
 def teilnehmer_zahlen(strecke, personen):
     return [i for i, (min_strecke, max_strecke) in enumerate(personen) if min_strecke <= strecke <= max_strecke]
+
 
 def greedy_algorithm(personen):
     gewählte_strecken = []
@@ -78,24 +97,25 @@ def greedy_algorithm(personen):
 
     for _ in range(3):
         beste_strecke = None
-        beste_abdeckung = set()      
+        beste_abdeckung = set()
 
         for strecke in strecken_kandidaten:
             aktuelle_abdeckung = set(teilnehmer_zahlen(strecke, personen))
-            neue_abdeckung = aktuelle_abdeckung - abgedeckte_personen 
-            
+            neue_abdeckung = aktuelle_abdeckung - abgedeckte_personen
+
             if len(neue_abdeckung) > len(beste_abdeckung):
                 beste_strecke = strecke
                 beste_abdeckung = neue_abdeckung
-        
+
         if beste_strecke is None:
             beste_strecke = strecken_kandidaten.pop()
             beste_abdeckung = set(teilnehmer_zahlen(beste_strecke, personen))
         gewählte_strecken.append(beste_strecke)
         abgedeckte_personen.update(beste_abdeckung)
-        strecken_kandidaten.discard(beste_strecke) 
-    
+        strecken_kandidaten.discard(beste_strecke)
+
     return gewählte_strecken, abgedeckte_personen
+
 
 def main():
     while True:
@@ -113,6 +133,7 @@ def main():
         except ValueError:
             print("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.")
             input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
+
 
 if __name__ == "__main__":
     main()
