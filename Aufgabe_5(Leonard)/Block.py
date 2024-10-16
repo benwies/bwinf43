@@ -9,6 +9,8 @@ class Block():
     
 # Überprüft ob die Tür gerade geschlossen oder offen ist
     def checkStatues(self):
+        """
+        """        
         if self.time % self.interval == 0:
             if self.time/self.interval%2 == 0:
                 self.closed = True
