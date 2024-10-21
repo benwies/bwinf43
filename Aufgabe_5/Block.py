@@ -16,3 +16,5 @@ class Block():
             else:
                 self.closed = False
                 print("open")
+    
+        

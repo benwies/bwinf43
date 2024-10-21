@@ -8,10 +8,11 @@ class ListeAktionen:
         a = ak.Aktion(1)
         self.list.append(a)
     
-        
-l = ListeAktionen()
+    def getTime(self):
+        for i in range(len(self.list)):
+            time =+ self.list[i].warten
+            return time
 
-
-
-for a in range(len(l.list)):
-    print(l.list[a].zuWarten)
+    def executeAction(self):
+        if self.list[-1].aktionAusführen() == True:
+            self.extendList
