@@ -32,3 +32,4 @@ class ListBlocks:
     def printList(self):
         for i in range(len(self.listOfBlocks)):
             print(self.listOfBlocks[i].interval)
+    

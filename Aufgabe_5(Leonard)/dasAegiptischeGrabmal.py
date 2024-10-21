@@ -8,4 +8,5 @@ blöcke.addBlock(1)
 blöcke.addBlock(1)
 blöcke.addBlock(1)
 blöcke.printList()
-liste.executeAction()
+
+blöcke.checkStatusFromTo(0,3,1)
