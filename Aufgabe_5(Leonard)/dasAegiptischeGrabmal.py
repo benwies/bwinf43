@@ -3,5 +3,9 @@ import ListeBloecke as lb
 
 liste = la.ListeAktionen()
 blöcke = lb.ListBlocks()
-blöcke.inputBlocks()
+blöcke.addBlock(1)
+blöcke.addBlock(1)
+blöcke.addBlock(1)
+blöcke.addBlock(1)
+blöcke.printList()
 liste.executeAction()

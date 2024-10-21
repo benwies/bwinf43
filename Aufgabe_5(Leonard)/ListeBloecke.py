@@ -14,12 +14,21 @@ class ListBlocks:
         while (userInput != "fertig"):
             userInput = input()
             if userInput.isdigit() == True:
-                block = bl.Block(userInput)
-                self.listOfBlocks.append(block)
-        
+                self.addBlock(userInput)
+
+
+
+    def addBlock(self,intervall):
+        block = bl.Block(intervall)
+        self.listOfBlocks.append(block)
+
 
     def checkStatusFromTo(self,start,end,time):
         for i in range(end-start):
             if self.listOfBlocks[start + i].checkStatues(time) != True:
                 return False
         return True
+    
+    def printList(self):
+        for i in range(len(self.listOfBlocks)):
+            print(self.listOfBlocks[i].interval)

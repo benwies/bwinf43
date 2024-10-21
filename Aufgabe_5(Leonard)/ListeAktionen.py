@@ -15,8 +15,4 @@ class ListeAktionen:
             time = time + self.list[i].warten
             return time
 
-    def executeAction(self):
-        print("passt")
-        time = self.getTime()
-        if self.list[-1].aktionAusführen(time,len(self.list),self.list[-1].zuWarten) == True:
-            self.extendList
+    

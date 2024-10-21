@@ -12,8 +12,6 @@ class Block():
         """        
         if time % self.interval == 0:
             if time/self.interval%2 == 0:
-                self.closed = True
-                print("closed")
+                return True
             else:
-                self.closed = False
-                print("open")
+                return False

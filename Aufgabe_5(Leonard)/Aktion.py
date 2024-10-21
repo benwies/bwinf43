@@ -9,8 +9,3 @@ class Aktion:
         self.zuWarten = zuWarten
         pass
     
-    def aktionAusführen(self, timeOld,position,zuWarten):
-        
-        while lb.checkStatusFromTo(position, zuWarten,time) != True:
-            self . warten += 1
-            time = timeOld + self.warten
