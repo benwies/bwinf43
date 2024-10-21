@@ -1,15 +1,16 @@
 import Block as bl
 import ListeBloecke as lb
+import ListeAktionen as la
 
 class Aktion:
     def __init__(self,zuWarten):
-        self.warten = int
+        self.warten = int(0)
         self.bewegt = int
         self.zuWarten = zuWarten
         pass
     
-    def aktionAusführen(self, time,position,zuWarten):
+    def aktionAusführen(self, timeOld,position,zuWarten):
         
-        if lb.checkStatusFromTo(position, zuWarten) == True:
-            self.bewegt = self.zuWarten
-            return True
+        while lb.checkStatusFromTo(position, zuWarten,time) != True:
+            self . warten += 1
+            time = timeOld + self.warten

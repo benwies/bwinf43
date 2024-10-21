@@ -18,8 +18,8 @@ class ListBlocks:
                 self.listOfBlocks.append(block)
         
 
-    def checkStatusFromTo(self,start,end):
+    def checkStatusFromTo(self,start,end,time):
         for i in range(end-start):
-            if self.listOfBlocks[start + i].checkStatues() != True:
+            if self.listOfBlocks[start + i].checkStatues(time) != True:
                 return False
         return True
