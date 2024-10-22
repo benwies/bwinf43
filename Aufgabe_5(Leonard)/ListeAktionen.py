@@ -1,4 +1,4 @@
-import Aktion as ak
+
 
 class ListeAktionen:
     def __init__(self):
@@ -6,7 +6,8 @@ class ListeAktionen:
         self.extendList()
     
     def extendList(self):
-        a = ak.Aktion(1)
+        import Aktion as ak
+        a = ak.Aktion(int(1))
         self.list.append(a)
     
     def getTime(self):
@@ -14,5 +15,11 @@ class ListeAktionen:
         for i in range(len(self.list)):
             time = time + self.list[i].warten
             return time
+        
+    def getPosition(self):
+        position = int(0)
+        for i in range(len(self.list)):
+            position = position + self.list[i].bewegt
+            return int(position)
 
     

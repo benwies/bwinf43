@@ -2,9 +2,10 @@ import keyboard
 import Block as bl
 
 
-class ListBlocks:
+class ListBlocks:        
+    listOfBlocks = []
+
     def __init__(self) -> None:
-        self.listOfBlocks = []
         pass
 
 # hier werden die einzelnen Intzervalle für die Blöcke eingegeben und ein Objekt Block wird erstellt mit dem jeweiligen Intervall als Variable
@@ -22,11 +23,14 @@ class ListBlocks:
         block = bl.Block(intervall)
         self.listOfBlocks.append(block)
 
-
-    def checkStatusFromTo(self,start,end,time):
-        for i in range(end-start):
-            if self.listOfBlocks[start + i].checkStatues(time) != True:
+    @classmethod
+    def checkStatusFromTo(start,end,time):
+        x = end - start
+        for i in range(x):
+            if listOfBlocks[start + i].checkStatues(time) != True:
                 return False
+            else:
+                pass
         return True
     
     def printList(self):
