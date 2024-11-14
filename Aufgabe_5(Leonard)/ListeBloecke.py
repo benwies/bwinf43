@@ -28,7 +28,7 @@ class ListBlocks:
         listOfBlocks = self.listOfBlocks
         x = end - start
         for i in range(x):
-            if listOfBlocks[start + i].checkStatues(time) != True:
+            if listOfBlocks[start + i].checkStatues(int(time)) != True:
                 return False
             else:
                 pass

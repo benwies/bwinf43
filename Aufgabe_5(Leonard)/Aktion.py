@@ -14,6 +14,9 @@ class Aktion(ListeAktionen, ListBlocks):
     
     def move(self,time,liste):
         end = self.zuWarten+self.position
-        while ListBlocks.checkStatusFromTo(self.position,end,time):
+        i = 0
+        while ListBlocks.checkStatusFromTo(self.position,end,int(time)):
+            i =+ 1
+            print(i)
             pass
         

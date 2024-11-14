@@ -11,7 +11,7 @@ blöcke.addBlock(2)
 blöcke.addBlock(2)
 # blöcke.printList()
 liste.extendList()
-time = liste.getTime
+time = 10
 liste.list[-1].move(time,blöcke.listOfBlocks)
 
 
