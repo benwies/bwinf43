@@ -5,20 +5,19 @@ from ListeAktionen import ListeAktionen
 
 class Aktion(ListeAktionen, ListBlocks):
     def __init__(self,zuWarten,position):
-        
-        self.warten = int(0)
-        self.bewegt = int
+        #wartenist mind 1 da Türen Intervall < 0 ist und sonst die Rechnung nicht Fuunktioniert da eine gweisse Grundzeit gegeben werden muss
+        self.warten = int(1)
+        self.bewegt = int(0)
         self.zuWarten = int(zuWarten)
         self.position = int(position)
         pass
     
     def move(self,time,liste):
-        print("test move")
         end = self.zuWarten+self.position
         while ListBlocks.checkStatusFromTo(self.position,end,time) != True :
             self.warten =+ int(1)
-        
-        print(time , "offen")
+            time = time + 1
+        self.bewegt = self.zuWarten    
         self.warten =+ 1
         time =+ 1
 

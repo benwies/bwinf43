@@ -1,22 +1,16 @@
-import math
+def intervall_pruefen(zahl, intervall_breite=3):
+    # Prüft, ob der Abschnitt (floor der Zahl geteilt durch die Breite) gerade oder ungerade ist
+    return ((zahl -1)  // intervall_breite) % 2 == 1
 
-# Gegebene Werte
-m = 0.03  # Masse in kg
-g = 9.81  # Erdbeschleunigung in m/s^2
-Q = 150e-9  # Ladung in C
-theta_deg = 1  # Winkel in Grad
-
-# Gravitationskraft
-F_g = m * g
-
-# Winkel in Radiant umrechnen
-theta_rad = math.radians(theta_deg)
-
-# Verhältnis der Kräfte
-F_E = F_g * math.tan(theta_rad)
-
-# Berechnung der elektrischen Feldstärke
-E = F_E / Q
-
-F_g, F_E, E
-print(E)
+# Beispielaufrufe:
+print(intervall_pruefen(1))  # Ausgabe: False
+print(intervall_pruefen(2))  # Ausgabe: False
+print(intervall_pruefen(3))  # Ausgabe: True
+print(intervall_pruefen(4))  # Ausgabe: True
+print(intervall_pruefen(5))  # Ausgabe: True
+print(intervall_pruefen(6))  # Ausgabe: False
+print(intervall_pruefen(7))  # Ausgabe: False
+print(intervall_pruefen(8))  # Ausgabe: False
+print(intervall_pruefen(9))  # Ausgabe: True
+print(intervall_pruefen(10)) # Ausgabe: True
+print(intervall_pruefen(11)) # Ausgabe: True
