@@ -28,11 +28,10 @@ class ListBlocks:
         listOfBlocks = self.listOfBlocks
         x = end - start
         for i in range(x):
-            if listOfBlocks[start + i].checkStatues(int(time)) != True:
-                return False
+            if listOfBlocks[start + i].checkStatues(int(time)) == True:
+                return True
             else:
-                pass
-        return True
+                return False
     
     def printList(self):
         for i in range(len(self.listOfBlocks)):

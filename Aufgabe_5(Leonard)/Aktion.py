@@ -13,10 +13,13 @@ class Aktion(ListeAktionen, ListBlocks):
         pass
     
     def move(self,time,liste):
+        print("test move")
         end = self.zuWarten+self.position
-        i = 0
-        while ListBlocks.checkStatusFromTo(self.position,end,int(time)):
-            i =+ 1
-            print(i)
-            pass
+        while ListBlocks.checkStatusFromTo(self.position,end,time) != True :
+            self.warten =+ int(1)
+        
+        print(time , "offen")
+        self.warten =+ 1
+        time =+ 1
+
         

@@ -7,7 +7,7 @@ class ListeAktionen:
     
     def extendList(self):
         import Aktion as ak
-        a = ak.Aktion(int(1),1)
+        a = ak.Aktion(int(1),len(self.list)+1)
         self.list.append(a)
     
     def getTime(self):
