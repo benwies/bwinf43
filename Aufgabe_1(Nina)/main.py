@@ -69,5 +69,6 @@ def main():
     print("Gültiger Hopsitext" if is_valid else "Kein gültiger Hopsitext")
     print(message)
 
+
 if __name__ == "__main__":
     main()  # Führt die main-Funktion aus, wenn das Programm gestartet wird
