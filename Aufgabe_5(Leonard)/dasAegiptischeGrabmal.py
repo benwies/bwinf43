@@ -5,11 +5,11 @@ import Aktion as ak
 
 liste = la.ListeAktionen()
 blöcke = lb.ListBlocks()
+blöcke.addBlock(20)
 blöcke.addBlock(3)
 blöcke.addBlock(3)
-blöcke.addBlock(3)
-blöcke.addBlock(3)
-# blöcke.printList()
+blöcke.addBlock(4)
+blöcke.printList()
 
 # while liste.getPosition()-1 <= len(blöcke.listOfBlocks):
 print("Huan")
