@@ -11,5 +11,5 @@ class Block():
         if time == 0:
             return False    
         else: 
-            return ((time-1)//self.interval)%2 == 1
+            return ((time)//self.interval)%2 == 1
         

@@ -8,15 +8,6 @@ class ListBlocks:
     def __init__(self) -> None:
         pass
 
-# hier werden die einzelnen Intzervalle für die Blöcke eingegeben und ein Objekt Block wird erstellt mit dem jeweiligen Intervall als Variable
-    def inputBlocks(self):
-        userInput = -1
-        print("Bitte geben sie  Steinblock Intervalle ein falls fertig geben sie fertig ein ")
-        while (userInput != "fertig"):
-            userInput = input()
-            if userInput.isdigit() == True:
-                self.addBlock(userInput)
-
 
 
     def addBlock(self,intervall):
@@ -28,12 +19,14 @@ class ListBlocks:
     def checkStatusFromTo(self,start,end,time):
         if time == 0:
             return False
-        listOfBlocks = self.listOfBlocks
         x = end  - start
         for i in range(x):
-            if listOfBlocks[start + i].checkStatues(int(time)) == True:
-                return True
-        return False
+            if self.listOfBlocks[start + i].checkStatues(int(time)) == False:
+                
+                return False
+        return True
+    
+    
     @classmethod
     def checkStatusAt(self,position,time):
         return self.listOfBlocks[position].checkStatues(time)

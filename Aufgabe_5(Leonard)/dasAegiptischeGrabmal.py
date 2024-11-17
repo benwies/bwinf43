@@ -5,20 +5,27 @@ import Aktion as ak
 
 liste = la.ListeAktionen() 
 blöcke = lb.ListBlocks()
-blöcke.addBlock(4)
-blöcke.addBlock(10)
-blöcke.addBlock(3)
-blöcke.addBlock(3)
-blöcke.addBlock(4)
-blöcke.addBlock(1)
-print(blöcke.checkStatusFromTo(0,2,11))
-print(blöcke.listOfBlocks[1].checkStatues(11))
+blöcke.addBlock(5)
+blöcke.addBlock(8)
+blöcke.addBlock(17)
+
+
+
+# test = la.ListeAktionen()
+# test.extendList()
+# test.list[-1].zuWarten = 1
+# test.list[-1].move(0)
+# for i in range(len(test.list)):
+#     print("Warten: ",test.list[-1].warten)
+
+
+
+
 
 liste.extendList()
 while(liste.getPosition() != len(blöcke.listOfBlocks)):
-    print("position: ",liste.getPosition())
     time = liste.getTime()
-    t = liste.list[-1].move(time,blöcke.listOfBlocks)
+    t = liste.list[-1].move(time)
     if t == "kill":
         print("kill")
         a = liste.list[-1]
