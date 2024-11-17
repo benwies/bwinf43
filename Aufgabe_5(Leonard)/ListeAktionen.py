@@ -9,7 +9,7 @@ class ListeAktionen:
         import Aktion as ak
         a = ak.Aktion(int(1),self.getPosition())
         self.list.append(a)
-    
+
     def getTime(self):
         time = int(0)
         for i in range(len(self.list)):

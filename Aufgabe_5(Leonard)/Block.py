@@ -7,6 +7,9 @@ class Block():
 
     
 # Überprüft ob die Tür gerade geschlossen oder offen ist
-    def checkStatues(self,time):     
-        return ((time-1)//self.interval)%2 == 1
+    def checkStatues(self,time):
+        if time == 0:
+            return False    
+        else: 
+            return ((time-1)//self.interval)%2 == 1
         
