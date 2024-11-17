@@ -1,31 +1,9 @@
 import sys
 import os
-import subprocess
 import time
-
-def open_in_new_terminal():
-    if os.name == 'nt':
-        script_path = os.path.abspath(__file__)
-        script_dir = os.path.dirname(script_path)
-        subprocess.run(['start', 'cmd', '/k', f'cd /D {script_dir} && python {script_path}'], shell=True)
-        sys.exit()
-
-if __name__ == "__main__":
-    if os.name == 'nt' and not sys.stdin.isatty():
-        open_in_new_terminal()
-
-ascii_art = """
-██╗    ██╗ █████╗ ███╗   ██╗██████╗ ███████╗██████╗ ████████╗ █████╗  ██████╗ 
-██║    ██║██╔══██╗████╗  ██║██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██╔══██╗██╔════╝ 
-██║ █╗ ██║███████║██╔██╗ ██║██║  ██║█████╗  ██████╔╝   ██║   ███████║██║  ███╗
-██║███╗██║██╔══██║██║╚██╗██║██║  ██║██╔══╝  ██╔══██╗   ██║   ██╔══██║██║   ██║
-╚███╔███╔╝██║  ██║██║ ╚████║██████╔╝███████╗██║  ██║   ██║   ██║  ██║╚██████╔╝
- ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝                                                                  
-"""
 
 def menü_anzeigen():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(ascii_art)
     print("Bitte wählen Sie eine Option:")
     print("1. Datei scannen und auswählen")
     print("2. Beenden")

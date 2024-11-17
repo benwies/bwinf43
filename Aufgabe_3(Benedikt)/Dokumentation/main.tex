@@ -1,0 +1,342 @@
+\documentclass[a4paper,10pt,ngerman]{scrartcl}
+\usepackage{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper,margin=2.5cm,footskip=0.5cm]{geometry}
+
+\newcommand{\Aufgabe}{Aufgabe 3: Wandertag}
+\newcommand{\TeamId}{00153}
+\newcommand{\TeamName}{ByteBusters}
+\newcommand{\Namen}{Benedikt Wiesner}
+
+\usepackage{scrlayer-scrpage, lastpage}
+\setkomafont{pageheadfoot}{\large\textrm}
+\lohead{\Aufgabe}
+\rohead{Team-ID: \TeamId}
+\cfoot*{\thepage{}/\pageref{LastPage}}
+
+\usepackage{titling}
+\setlength{\droptitle}{-1.0cm}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  language=Python,
+  keywordstyle=\color{blue},
+  commentstyle=\color{mygreen},
+  stringstyle=\color{mymauve},
+  rulecolor=\color{black},
+  basicstyle=\footnotesize\ttfamily,
+  numberstyle=\tiny\color{mygray},
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=true,
+  showtabs=false,
+  stepnumber=2,
+  tabsize=2,
+  title=\lstname
+}
+
+\title{\textbf{\Huge\Aufgabe}}
+\author{\LARGE Team-ID: \LARGE \TeamId \\\\
+        \LARGE Team-Name: \LARGE \TeamName \\\\
+        \LARGE Bearbeiter/-innen dieser Aufgabe: \\ 
+        \LARGE \Namen\\\\}
+\date{\LARGE\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\vspace{0.5cm}
+
+\section{Lösungsidee}
+
+Die Kernidee unserer Lösung basiert auf einem Greedy-Algorithmus, der darauf abzielt, die maximale Anzahl von Teilnehmern mit drei optimal gewählten Streckenlängen abzudecken. Der Algorithmus wird in den folgenden Schritten ausgeführt:
+
+\begin{enumerate}
+    \item \textbf{Erstellung der Streckenlängenliste}: Zunächst werden alle möglichen Streckenlängen ermittelt, indem die minimalen und maximalen Streckenlängen aller Teilnehmer gesammelt werden. Diese Streckenlängen stellen die potenziellen Werte dar, die für die Abdeckung der Teilnehmer erforderlich sind.
+    \item \textbf{Berechnung der Abdeckung für jede Streckenlänge}: Für jede dieser möglichen Streckenlängen wird berechnet, wie viele neue Teilnehmer sie abdeckt, die bisher noch nicht durch eine der bereits gewählten Streckenlängen erfasst wurden. Diese Berechnung erfolgt unter Berücksichtigung der individuellen Anforderungen der Teilnehmer.
+    \item \textbf{Auswahl der optimalen Streckenlänge}: Die Streckenlänge, die die größte Anzahl neuer Teilnehmer abdeckt, wird ausgewählt und zur aktuellen Lösung hinzugefügt. Dies stellt sicher, dass bei jeder Wahl die Abdeckung maximiert wird.
+    \item \textbf{Wiederholung des Auswahlprozesses}: Dieser Prozess wird wiederholt, bis insgesamt drei Streckenlängen ausgewählt wurden oder bis keine weiteren Teilnehmer mehr durch zusätzliche Streckenlängen abgedeckt werden können. Sollte es keine weiteren Teilnehmer geben, die durch eine zusätzliche Streckenlänge erfasst werden können, endet der Algorithmus vorzeitig.
+\end{enumerate}
+
+Dieser Greedy-Ansatz maximiert in jeder Runde die Anzahl der neu abgedeckten Teilnehmer, was zu einer optimalen oder nahezu optimalen Lösung führt. Der Algorithmus trifft dabei lokale Entscheidungen, ohne langfristige Auswirkungen zu berücksichtigen. Aufgrund der begrenzten Anzahl an Streckenlängen wird er in akzeptabler Zeit ausgeführt und liefert in vielen Fällen eine Lösung, die der optimalen sehr nahekommt.
+
+\section{Umsetzung}
+
+Die Implementierung unserer Lösung wurde in Python realisiert und umfasst mehrere Hauptkomponenten, die in den folgenden Untersektionen beschrieben werden.
+
+
+\subsection{Dateneinlese}
+
+Zu Beginn des Programms werden die Eingabedaten aus einer Textdatei eingelesen, die im gleichen Verzeichnis wie das Skript abgelegt ist. Die erste Zeile enthält die Anzahl der Personen, gefolgt von den minimalen und maximalen Streckenlängen jeder Person.
+
+\subsection{Greedy-Algorithmus}
+
+Der Greedy-Algorithmus stellt den zentralen Bestandteil der Lösung dar. Das Hauptziel besteht darin, mit einer Auswahl von genau drei Streckenlängen die maximale Anzahl an Teilnehmern abzudecken. In jeder Iteration wird die Streckenlänge gewählt, die die größte Anzahl an neuen, bisher nicht abgedeckten Teilnehmern erreicht.
+
+Formell betrachtet:
+\begin{itemize}
+    \item Gegeben sei eine Menge von Teilnehmern \( P = \{ p_1, p_2, \dots, p_n \} \) mit deren minimalen und maximalen Streckenlängen \( [\text{min}_i, \text{max}_i] \).
+    \item Zu Beginn sind noch keine Strecken gewählt und keine Teilnehmer abgedeckt. Das Ziel ist es, mit jeder neuen Streckenlänge die Zahl der abgedeckten Teilnehmer zu maximieren.
+\end{itemize}
+
+\textbf{Der Algorithmus wird in mehreren Schritten durchgeführt:}
+\begin{enumerate}
+    \item \textbf{Initialisierung}: 
+    Es wird eine Liste aller möglichen Streckenlängen (Minimal- und Maximalwerte für jede Person) erstellt. Diese Strecken bilden die Kandidaten für die Auswahl.
+    
+    \item \textbf{Iterative Auswahl}:
+    In jeder Iteration wird die Streckenlänge ausgewählt, die die größte Anzahl an neuen Teilnehmern abdeckt. Diese neuen Teilnehmer sind diejenigen, die noch nicht durch andere Streckenlängen abgedeckt wurden. Formal lässt sich die Anzahl der neuen Teilnehmer für eine Streckenlänge \( s \) als folgende Menge beschreiben:
+    \[
+    \text{Neue Teilnehmer}(s) = \{ p_i \mid \text{min}_i \leq s \leq \text{max}_i \} \setminus \text{abgedeckte Teilnehmer}.
+    \]
+    Die Streckenlänge \( s_{\text{best}} \) wird durch Maximierung der Anzahl neuer Teilnehmer ausgewählt:
+    \[
+    s_{\text{best}} = \arg\max_s |\text{Neue Teilnehmer}(s)|.
+    \]
+    
+    \item \textbf{Abbruchbedingung}:
+    Dieser Prozess wird fortgesetzt, bis entweder drei Streckenlängen ausgewählt wurden oder keine neuen Teilnehmer mehr abgedeckt werden können.
+\end{enumerate}
+
+Der Algorithmus stellt sicher, dass in jedem Schritt die bestmögliche Entscheidung getroffen wird, um die Anzahl der abgedeckten Teilnehmer zu maximieren. 
+
+Die Laufzeit des Algorithmus ist in \( O(m \cdot n) \), wobei \( m \) die Anzahl der Streckenlängen und \( n \) die Anzahl der Teilnehmer ist. Da maximal drei Streckenlängen ausgewählt werden, ergibt sich eine Gesamtkomplexität von \( O(3 \cdot m \cdot n) \), was bei kleinen bis mittleren Eingabemengen effizient ist.
+
+\begin{lstlisting}[language=Python]
+def greedy_algorithm(personen):
+    gewählte_strecken = []
+    abgedeckte_personen = set()
+    strecken_kandidaten = set()
+
+    for min_strecke, max_strecke in personen:
+        strecken_kandidaten.add(min_strecke)
+        strecken_kandidaten.add(max_strecke)
+
+    for _ in range(3):
+        beste_strecke = None
+        beste_abdeckung = set()
+
+        for strecke in strecken_kandidaten:
+            aktuelle_abdeckung = set(teilnehmer_zahlen(strecke, personen))
+            neue_abdeckung = aktuelle_abdeckung - abgedeckte_personen
+
+            if len(neue_abdeckung) > len(beste_abdeckung):
+                beste_strecke = strecke
+                beste_abdeckung = neue_abdeckung
+
+        if beste_strecke is None:
+            break
+
+        gewählte_strecken.append(beste_strecke)
+        abgedeckte_personen.update(beste_abdeckung)
+        strecken_kandidaten.discard(beste_strecke)
+
+    return gewählte_strecken, abgedeckte_personen
+\end{lstlisting}
+
+In der Implementierung wird in jeder Iteration die Anzahl der abgedeckten Teilnehmer mit einer bestimmten Streckenlänge durch die Funktion \texttt{teilnehmer\_zahlen} ermittelt. Anschließend wird die Strecke ausgewählt, die die größte Menge an nicht abgedeckten Teilnehmern erreicht. Die Laufzeit des Algorithmus wird durch die Anzahl der Iterationen und der zu prüfenden Streckenlängen bestimmt.
+
+
+\subsection{Hilfsfunktionen}
+
+Zur Unterstützung des Algorithmus wurden mehrere Hilfsfunktionen implementiert:
+
+\begin{itemize}
+    \item \texttt{teilnehmer\_zahlen}: Bestimmt, welche Teilnehmer eine bestimmte Strecke absolvieren können.
+    \item \texttt{open\_in\_new\_terminal}: Öffnet das Skript in einem neuen Terminalfenster (nur für Windows).
+    \item \texttt{menü\_anzeigen}: Zeigt das Hauptmenü mit ASCII-Art an.
+    \item \texttt{option\_1}: Verarbeitet die Auswahl der zu scannenden Datei und führt den Greedy-Algorithmus aus.
+    \item \texttt{Laufzeitmessung}: Misst die Laufzeit des gesamten Programms, indem die Zeit vor und nach der Algorithmus-Ausführung erfasst und die Differenz berechnet wird.
+\end{itemize}
+
+Mit diesen Komponenten wurde eine effiziente und übersichtliche Lösung für das Problem implementiert.
+
+
+
+
+
+\clearpage
+\section{Beispiele}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|p{2.5cm}|p{9.5cm}|p{2.5cm}|}
+\hline
+\textbf{Dateiname} & \textbf{Lösung} & \textbf{Laufzeit} \\
+\hline
+\raggedright wandern1.txt & 
+\begin{itemize}
+    \item Gewählte Streckenlängen: [64, 35, 51]
+    \item Teilnehmende Personen: [0, 1, 3, 4, 5, 6]
+\end{itemize} & 0.0010 s \\
+\hline
+\raggedright wandern7.txt & 
+\begin{itemize}
+    \item Gewählte Streckenlängen: [52515, 86493, 30966]
+    \item Teilnehmende Personen: [2, 3, 4, 5, 7, 8, ..., 797, 799] (499 Personen)
+\end{itemize} & 0.2920 s \\
+\hline
+\raggedright leer.txt & 
+\begin{itemize}
+    \item Die Datei ist leer.
+\end{itemize} & N/A \\
+\hline
+\raggedright nureineperson.txt & 
+\begin{itemize}
+    \item Gewählte Streckenlängen: [50]
+    \item Teilnehmende Personen: [0]
+\end{itemize} & 0.0010 s \\
+\hline
+\raggedright gleich.txt & 
+\begin{itemize}
+    \item Gewählte Streckenlängen: [42]
+    \item Teilnehmende Personen: [0, 1, 2, 3, 4]
+\end{itemize} & 0.0029 s \\
+\hline
+\raggedright keine.txt & 
+\begin{itemize}
+    \item Gewählte Streckenlängen: [70, 40, 10]
+    \item Teilnehmende Personen: [0, 1, 3]
+\end{itemize} & 0.0030 s \\
+\hline
+\end{tabular}
+\caption{Ergebnisse der Dateiverarbeitung}
+\label{tab:ergebnisse}
+\end{table}
+
+
+
+
+\section{Diskussion und Ausblick}
+
+Unser Greedy-Algorithmus liefert in den meisten Fällen eine optimale oder nahezu optimale Lösung. Er ist effizient und einfach zu implementieren. Allerdings gibt es einige Punkte zu beachten:
+
+\begin{itemize}
+    \item Der Algorithmus garantiert nicht immer die global optimale Lösung, da er in jedem Schritt die lokal beste Wahl trifft.
+    \item In Extremfällen, wo eine globale Betrachtung notwendig wäre, könnte der Algorithmus suboptimale Ergebnisse liefern.
+
+\end{itemize}
+
+Für zukünftige Verbesserungen könnten wir folgende Ansätze in Betracht ziehen:
+
+\begin{itemize}
+    \item Implementierung eines exakten Algorithmus (z.B. dynamische Programmierung) für kleinere Datensätze, um die Optimalität zu garantieren.
+    \item Entwicklung eines hybriden Ansatzes, der den Greedy-Algorithmus mit lokaler Suche oder Metaheuristiken kombiniert, um die Lösungsqualität zu verbessern.
+    \item Parallelisierung des Algorithmus für größere Datensätze, um die Laufzeit zu reduzieren.
+\end{itemize}
+
+\section{Quellcode}
+
+Der Quellcode ist in mehrere Abschnitte unterteilt, um die einzelnen Schritte des Algorithmus klar darzustellen:
+
+\subsection{Greedy-Algorithmus}
+
+
+
+\begin{lstlisting}[language=Python]
+def greedy_algorithm(personen):
+    gewählte_strecken = []
+    abgedeckte_personen = set()
+
+    strecken_kandidaten = set()
+    for min_strecke, max_strecke in personen:
+        strecken_kandidaten.add(min_strecke)
+        strecken_kandidaten.add(max_strecke)
+
+    for _ in range(3):
+        if not strecken_kandidaten:
+            break
+
+        beste_strecke = None
+        beste_abdeckung = set()
+
+        for strecke in strecken_kandidaten:
+            aktuelle_abdeckung = set(teilnehmer_zahlen(strecke, personen))
+            neue_abdeckung = aktuelle_abdeckung - abgedeckte_personen
+
+            if len(neue_abdeckung) > len(beste_abdeckung):
+                beste_strecke = strecke
+                beste_abdeckung = neue_abdeckung
+
+        if beste_strecke is None:
+            break
+
+        gewählte_strecken.append(beste_strecke)
+        abgedeckte_personen.update(beste_abdeckung)
+        strecken_kandidaten.discard(beste_strecke)
+
+    return gewählte_strecken, abgedeckte_personen
+\end{lstlisting}
+
+\subsection{Teilnehmerzahlen}
+
+
+
+\begin{lstlisting}[language=Python]
+def teilnehmer_zahlen(strecke, personen):
+    return [i for i, (min_strecke, max_strecke) in enumerate(personen) if min_strecke <= strecke <= max_strecke]
+\end{lstlisting}
+
+\subsection{Dateiauswahl und Verarbeitung}
+
+
+
+\begin{lstlisting}[language=Python]
+def option_1():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    dateien = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
+
+    if not dateien:
+        print("Keine Textdateien im Verzeichnis gefunden.")
+        return
+
+    print("Verfügbare Textdateien:")
+    for idx, datei in enumerate(dateien, 1):
+        print(f"{idx}. {datei}")
+
+    try:
+        auswahl = int(input("\nGeben Sie die Nummer der Datei ein, die verarbeitet werden soll: "))
+        if 1 <= auswahl <= len(dateien):
+            dateipfad = os.path.join(script_dir, dateien[auswahl - 1])
+
+            # Startzeit messen
+            start_zeit = time.time()
+
+            with open(dateipfad, 'r') as datei:
+                zeilen = datei.readlines()
+                eintragsanzahl = int(zeilen[0].strip())
+                personen = [tuple(map(int, zeile.strip().split())) for zeile in zeilen[1:eintragsanzahl + 1]]
+
+            print("\nVerarbeite Datei:", dateipfad)
+            strecken, teilnehmer = greedy_algorithm(personen)
+
+            print("Gewählte Streckenlängen:", strecken)
+            print("Teilnehmende Personen:", list(teilnehmer))
+
+            # Endzeit messen und Laufzeit berechnen
+            end_zeit = time.time()
+            laufzeit = end_zeit - start_zeit
+            print(f"\nLaufzeit für die Verarbeitung dieser Datei: {laufzeit:.4f} Sekunden")
+
+        else:
+            print("Ungültige Auswahl.")
+    except ValueError:
+        print("Ungültige Eingabe.")
+\end{lstlisting}
+
+\end{document}
