@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 
+
 # Öffnet das Skript in einem neuen Terminalfenster (nur für Windows)
 def open_in_new_terminal():
     if os.name == 'nt':  # Prüft, ob das OS Windows ist
@@ -111,8 +112,9 @@ def greedy_algorithm(personen):
 
     strecken_kandidaten = set()  # Set der möglichen Strecken
     for min_strecke, max_strecke in personen:
-        strecken_kandidaten.add(min_strecke)  # Min-Strecke als Kandidat
-        strecken_kandidaten.add(max_strecke)  # Max-Strecke als Kandidat
+        # Füge alle Strecken zwischen der minimalen und maximalen Strecke hinzu
+        for strecke in range(min_strecke, max_strecke + 1):
+            strecken_kandidaten.add(strecke)
 
     # Wähle maximal 3 Strecken
     for _ in range(3):
@@ -139,6 +141,7 @@ def greedy_algorithm(personen):
         strecken_kandidaten.discard(beste_strecke)  # Entferne die gewählte Strecke von den Kandidaten
 
     return gewählte_strecken, abgedeckte_personen  # Rückgabe der gewählten Strecken und abgedeckten Personen
+
 
 # Hauptmenüschleife
 def main():
