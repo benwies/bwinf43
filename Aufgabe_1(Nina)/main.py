@@ -31,10 +31,14 @@ def check_hopsitext(text):
         
         # Überprüft, ob die beiden Springer auf der gleichen Position landen (Kollision)
         if pos1 == pos2:
-            return False, f"Kollision bei Position {pos1}"  # Kollision gefunden
+            return False, pos1  # Kollision bei der Position von pos1
     
     # Wenn keine Kollision gefunden wird, ist der Text gültig
     return True, "Gültiger Hopsitext"
+
+def remove_invalid_word(words, invalid_index):
+    # Entfernt das ungültige Wort aus der Liste der Wörter
+    del words[invalid_index]
 
 def main():
     print("Willkommen zum Hopsitext-Generator!")
@@ -60,6 +64,26 @@ def main():
         print(message)
         print("-" * 40)  # Trennt die Ausgaben visuell
 
+        if not is_valid:
+            # Wenn der Text ungültig ist, entfernen wir das ungültige Wort und fordern den Benutzer auf, ein neues einzugeben
+            words = current_text.split()  # Aufteilen des Textes in Wörter
+            invalid_pos = message  # Extrahiert die Position der Kollision
+            word_index = 0  # Initialisieren des Wortindex
+            
+            # Finden des Worts, das die Kollision verursacht
+            char_count = 0
+            for i, word in enumerate(words):
+                word_length = len(word)
+                if char_count + word_length >= invalid_pos:
+                    word_index = i
+                    break
+                char_count += word_length + 1  # +1 für das Leerzeichen zwischen den Wörtern
+            
+            remove_invalid_word(words, word_index)  # Entfernt das ungültige Wort
+            text = words  # Aktualisiert den Text
+            print(f"Das ungültige Wort an Position {invalid_pos} wurde entfernt.")
+            print("Fügen Sie ein neues Wort hinzu:")
+    
     final_text = " ".join(text)  # Finaler Text, der durch alle Eingaben des Benutzers entstanden ist
     print("\nFinaler Text:")
     print(final_text)
@@ -68,7 +92,6 @@ def main():
     is_valid, message = check_hopsitext(final_text)
     print("Gültiger Hopsitext" if is_valid else "Kein gültiger Hopsitext")
     print(message)
-
 
 if __name__ == "__main__":
     main()  # Führt die main-Funktion aus, wenn das Programm gestartet wird
