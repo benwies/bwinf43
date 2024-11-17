@@ -3,12 +3,15 @@
 class ListeAktionen:
     def __init__(self):
         self.list = []
-        self.extendList()
+        # self.extendList()
     
     def extendList(self):
         import Aktion as ak
         a = ak.Aktion(int(1),self.getPosition())
         self.list.append(a)
+    
+    def popLastElement(self):
+        return self.list.pop()
 
     def getTime(self):
         time = int(0)
