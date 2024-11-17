@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 
+
 # Öffnet das Skript in einem neuen Terminalfenster (nur für Windows)
 def open_in_new_terminal():
     if os.name == 'nt':  # Prüft, ob das OS Windows ist
