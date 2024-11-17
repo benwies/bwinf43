@@ -1,97 +1,67 @@
 def calculate_jump(char):
-    # Überprüft, ob das Zeichen ein normaler Buchstabe (a-z) ist
     if char.lower() in 'abcdefghijklmnopqrstuvwxyz':
-        # Berechnet den Sprungwert als Position im Alphabet (a=1, b=2, ..., z=26)
         return ord(char.lower()) - ord('a') + 1
-    # Überprüft, ob das Zeichen ein deutsches Sonderzeichen (ä, ö, ü, ß) ist
     elif char.lower() in 'äöüß':
-        # Gibt spezielle Werte für deutsche Umlaute und das scharfe S zurück
         return {'ä': 27, 'ö': 28, 'ü': 29, 'ß': 30}[char.lower()]
-    # Wenn das Zeichen kein gültiger Buchstabe oder Sonderzeichen ist, gibt 0 zurück
     return 0
 
 def check_hopsitext(text):
-    pos1, pos2 = 0, 1  # Startpositionen der beiden Springer (pos1 und pos2)
-    len_text = len(text)  # Länge des Textes
-    
-    while pos1 < len_text and pos2 < len_text:  # Solange beide Springer im Text bleiben
-        # Überspringt ungültige Zeichen, die keinen Sprungwert haben (z. B. Leerzeichen)
+    pos1, pos2 = 0, 1  
+    len_text = len(text) 
+    while pos1 < len_text and pos2 < len_text:  
         while pos1 < len_text and calculate_jump(text[pos1]) == 0:
             pos1 += 1
         while pos2 < len_text and calculate_jump(text[pos2]) == 0:
             pos2 += 1
-        
-        # Wenn eine der Positionen das Ende des Textes erreicht, wird die Schleife beendet
         if pos1 >= len_text or pos2 >= len_text:
             break
-        
-        # Beide Springer bewegen sich basierend auf ihren Sprungwerten
         pos1 += calculate_jump(text[pos1])
         pos2 += calculate_jump(text[pos2])
-        
-        # Überprüft, ob die beiden Springer auf der gleichen Position landen (Kollision)
         if pos1 == pos2:
-            return False, pos1  # Kollision bei der Position von pos1
-    
-    # Wenn keine Kollision gefunden wird, ist der Text gültig
+            return False, pos1  
     return True, "Gültiger Hopsitext"
 
 def remove_invalid_word(words, invalid_index):
-    # Entfernt das ungültige Wort aus der Liste der Wörter
     del words[invalid_index]
 
 def main():
     print("Willkommen zum Hopsitext-Generator!")
     print("Geben Sie Ihren Text ein. Drücken Sie Enter für neue Zeilen.")
     print("Geben Sie eine leere Zeile ein, um die Eingabe zu beenden.")
-    
-    text = []  # Liste zur Speicherung des Textes
+    text = []  
     while True:
-        input_text = input("Eingabe: ").strip()  # Eingabe des Textes durch den Benutzer
-        if input_text == "":  # Wenn eine leere Zeile eingegeben wird, stoppt das Programm
+        input_text = input("Eingabe: ").strip()  
+        if input_text == "":  
             break
-        
-        text.append(input_text)  # Fügt den Text der Liste hinzu
-        current_text = " ".join(text)  # Verbindet alle Textteile zu einer einzigen Zeichenkette
-        
-        # Überprüft den aktuellen Text auf Kollisionen
+        text.append(input_text)
+        current_text = " ".join(text)
         is_valid, message = check_hopsitext(current_text)
-        
-        # Zeigt den aktuellen Text und den Status (gültig oder ungültig) an
         print("\nAktueller Text:")
         print(current_text)
         print("\nStatus:", "Gültiger Hopsitext" if is_valid else "Kein gültiger Hopsitext")
         print(message)
-        print("-" * 40)  # Trennt die Ausgaben visuell
-
+        print("-" * 40)
         if not is_valid:
-            # Wenn der Text ungültig ist, entfernen wir das ungültige Wort und fordern den Benutzer auf, ein neues einzugeben
-            words = current_text.split()  # Aufteilen des Textes in Wörter
-            invalid_pos = message  # Extrahiert die Position der Kollision
-            word_index = 0  # Initialisieren des Wortindex
-            
-            # Finden des Worts, das die Kollision verursacht
+            words = current_text.split()
+            invalid_pos = message
+            word_index = 0
             char_count = 0
             for i, word in enumerate(words):
                 word_length = len(word)
                 if char_count + word_length >= invalid_pos:
                     word_index = i
                     break
-                char_count += word_length + 1  # +1 für das Leerzeichen zwischen den Wörtern
-            
-            remove_invalid_word(words, word_index)  # Entfernt das ungültige Wort
-            text = words  # Aktualisiert den Text
+                char_count += word_length + 1
+            remove_invalid_word(words, word_index)
+            text = words
             print(f"Das ungültige Wort an Position {invalid_pos} wurde entfernt.")
             print("Fügen Sie ein neues Wort hinzu:")
-    
-    final_text = " ".join(text)  # Finaler Text, der durch alle Eingaben des Benutzers entstanden ist
+    final_text = " ".join(text)
     print("\nFinaler Text:")
     print(final_text)
-    
-    # Endgültige Überprüfung des gesamten Textes auf Kollisionen
     is_valid, message = check_hopsitext(final_text)
     print("Gültiger Hopsitext" if is_valid else "Kein gültiger Hopsitext")
     print(message)
 
 if __name__ == "__main__":
-    main()  # Führt die main-Funktion aus, wenn das Programm gestartet wird
+    main()
