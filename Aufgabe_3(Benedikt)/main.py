@@ -1,6 +1,7 @@
 import sys
 import os
 import subprocess
+import time
 
 # Öffnet das Skript in einem neuen Terminalfenster (nur für Windows)
 def open_in_new_terminal():
@@ -36,47 +37,57 @@ def menü_anzeigen():
 
 # Option 1: Textdateien im aktuellen Verzeichnis scannen und verarbeiten
 def option_1():
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Verzeichnis des Skripts
-    
-    # Alle .txt-Dateien im Verzeichnis suchen
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     dateien = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
     
-    if not dateien:  # Wenn keine Textdateien gefunden wurden
+    if not dateien:
         print("Keine Textdateien im Verzeichnis gefunden.")
         input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
         return
 
-    # Gefundene Textdateien anzeigen
     print("Verfügbare Textdateien:")
     for idx, datei in enumerate(dateien, 1):
         print(f"{idx}. {datei}")
 
     try:
-        # Benutzer wählt eine Datei aus
         auswahl = int(input("\nGeben Sie die Nummer der Datei ein, die verarbeitet werden soll: "))
         if 1 <= auswahl <= len(dateien):
-            # Pfad zur gewählten Datei erstellen
             dateipfad = os.path.join(script_dir, dateien[auswahl - 1])
+            
+            # Startzeit messen
+            start_zeit = time.time()
+            
             with open(dateipfad, 'r') as datei:
                 zeilen = datei.readlines()
-                # Erste Zeile enthält die Anzahl der Personen
+                if len(zeilen) == 0:
+                    print("Die Datei ist leer.")
+                    input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
+                    return
+                
                 eintragsanzahl = int(zeilen[0].strip())
-                # Verarbeite die folgenden Zeilen mit den Min- und Max-Strecken
+                if eintragsanzahl == 0:
+                    print("Die Datei enthält keine Einträge.")
+                    input("\nDrücken Sie Enter, um zum Hauptmenü zurückzukehren...")
+                    return
+                
                 personen = [tuple(map(int, zeile.strip().split())) for zeile in zeilen[1:eintragsanzahl + 1]]
 
             print("\nVerarbeite Datei:", dateipfad)
-            strecken, teilnehmer = greedy_algorithm(personen)  # Greedy-Algorithmus zur Auswahl der Strecken
+            strecken, teilnehmer = greedy_algorithm(personen)
 
-            # Ergebnisse anzeigen
             print("Gewählte Streckenlängen:", strecken)
             print("Teilnehmende Personen:", list(teilnehmer))
 
-            # Zeigt für jede Strecke die Min- und Max-Werte sowie die zugeordneten Teilnehmer an
             for strecke in strecken:
                 min_strecke = strecke
                 max_strecke = strecke
                 teilnehmer_bei_strecke = teilnehmer_zahlen(strecke, personen)
                 print(f"Strecke {strecke}: Min: {min_strecke}, Max: {max_strecke}, Teilnehmende Personen: {teilnehmer_bei_strecke}")
+
+            # Endzeit messen und Laufzeit berechnen
+            end_zeit = time.time()
+            laufzeit = end_zeit - start_zeit
+            print(f"\nLaufzeit für die Verarbeitung dieser Datei: {laufzeit:.4f} Sekunden")
 
         else:
             print("Ungültige Auswahl.")
@@ -105,6 +116,9 @@ def greedy_algorithm(personen):
 
     # Wähle maximal 3 Strecken
     for _ in range(3):
+        if not strecken_kandidaten:
+            break  # Keine weiteren Kandidaten mehr
+
         beste_strecke = None
         beste_abdeckung = set()
 
@@ -118,10 +132,8 @@ def greedy_algorithm(personen):
                 beste_abdeckung = neue_abdeckung
 
         if beste_strecke is None:
-            # Wenn keine Strecke optimal ist, wähle eine beliebige
-            beste_strecke = strecken_kandidaten.pop()
-            beste_abdeckung = set(teilnehmer_zahlen(beste_strecke, personen))
-        
+            break  # Keine optimale Strecke gefunden
+
         gewählte_strecken.append(beste_strecke)  # Füge die beste Strecke hinzu
         abgedeckte_personen.update(beste_abdeckung)  # Aktualisiere die abgedeckten Personen
         strecken_kandidaten.discard(beste_strecke)  # Entferne die gewählte Strecke von den Kandidaten
