@@ -10,8 +10,8 @@ class ListBlocks:
 
 
 
-    def addBlock(self,intervall):
-        block = bl.Block(intervall)
+    def addBlock(self,interval):
+        block = bl.Block(interval)
         self.listOfBlocks.append(block)
 
 

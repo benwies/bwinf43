@@ -1,9 +1,8 @@
 import Block as bl
 import ListeAktionen as la
 from ListeBloecke import ListBlocks 
-from ListeAktionen import ListeAktionen
 
-class Aktion(ListeAktionen, ListBlocks):
+class Aktion():
     def __init__(self,zuWarten,position):
         self.warten = int(0)
         self.bewegt = int(0)
@@ -14,32 +13,30 @@ class Aktion(ListeAktionen, ListBlocks):
     def move(self,ownTime):
         end = self.zuWarten + self.position
         if self.zuWarten == 1:
-            print("klein")
             while ListBlocks.checkStatusAt(self.position,ownTime) != True:
-                if self.checkForKill(ownTime) == False:
+                if self.checkForKill(ownTime) == True:
 
                     return "kill"   
                 self.warten = self.warten + int(1)
                 ownTime = ownTime + 1
         else:
-            print("groß")
             while ListBlocks.checkStatusFromTo(self.position,end,ownTime) != True :
                 
-                if self.checkForKill(ownTime) == False:
+                if self.checkForKill(ownTime) == True:
 
                     return "kill"
                 self.warten = self.warten + int(1)
                 ownTime = ownTime + 1
         self.bewegt = self.zuWarten
-        return "moved"    
+        return "bewegt"    
         # time = time + 1
 
 #return True wenn der Block zerdrücks und False wenn nicht.
     def checkForKill(self,time):
         if self.position == 0:
-            return True
+            return False
         else:
-            if ListBlocks.checkStatusAt(self.position,time) == False :
+            if ListBlocks.checkStatusAt(self.position,time) == True :
                 return False
             else:
                 return True

@@ -1,12 +1,13 @@
-# Datei öffnen und Zeile für Zeile lesen
-file_name = 'Idee.txt'
+import tkinter as tk
+from tkinter.filedialog import askopenfilename
+tk.Tk().withdraw()
 
-try:
-    with open(file_name, 'r') as file:
-        # Jede Zeile einzeln ausgeben
-        for line in file:
-            print(line.strip())  # .strip() entfernt das Zeilenumbruchzeichen
-except FileNotFoundError:
-    print(f"Die Datei {file_name} wurde nicht gefunden.")
-except Exception as e:
-    print(f"Ein Fehler ist aufgetreten: {e}")
+
+
+def lese_datei_ohne_erste_zeile():
+    datei_name = askopenfilename()
+    with open(datei_name, 'r', encoding='utf-8') as datei:
+        zeilen = datei.readlines()[1:]
+    return zeilen
+
+
