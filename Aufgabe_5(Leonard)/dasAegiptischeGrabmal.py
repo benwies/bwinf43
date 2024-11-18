@@ -30,13 +30,9 @@ def ausführen():
             liste.extendList()
             
         
-        
-    print("finall")
-    print("position: ",liste.getPosition())
+    print("Der Weg der Gegangen werden muss lautet")
     for i in range(len(liste.list)):
-        print("Warten:", liste.list[i].warten, " Bewegt: " ,liste.list[i].bewegt,"zuWarten:",liste.list[i].zuWarten,"Position: ",liste.list[i].position )
-        
-    print("Länge Liste: ",len(liste.list))
-    print(liste.getTime())
+        print("Warte für", liste.list[i].warten,"minuten.", "Gehe dann " ,liste.list[i].bewegt, "Blöcke weit" )
+
 
 ausführen()

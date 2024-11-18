@@ -11,7 +11,7 @@ class Aktion():
         pass
     
     def move(self,ownTime):
-        end = self.zuWarten + self.position
+        
         if self.zuWarten == 1:
             while ListBlocks.checkStatusAt(self.position,ownTime) != True:
                 if self.checkForKill(ownTime) == True:
@@ -20,6 +20,7 @@ class Aktion():
                 self.warten = self.warten + int(1)
                 ownTime = ownTime + 1
         else:
+            end = self.zuWarten + self.position
             while ListBlocks.checkStatusFromTo(self.position,end,ownTime) != True :
                 
                 if self.checkForKill(ownTime) == True:

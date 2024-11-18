@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> ffaefa82a4fcd4e8e2043ddaa49212519dc0a535
 import Block as bl
 
 
