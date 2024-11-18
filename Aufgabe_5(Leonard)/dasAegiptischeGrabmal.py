@@ -5,11 +5,12 @@ import Aktion as ak
 
 liste = la.ListeAktionen() 
 blöcke = lb.ListBlocks()
-blöcke.addBlock(5)
-blöcke.addBlock(8)
-blöcke.addBlock(17)
+# blöcke.addBlock(1)
+blöcke.addBlock(1)
+blöcke.addBlock(10)
+blöcke.addBlock(20)
 
-
+# print(blöcke.listOfBlocks[0].checkStatues(20))
 
 # test = la.ListeAktionen()
 # test.extendList()
@@ -21,27 +22,29 @@ blöcke.addBlock(17)
 
 
 
+def ausführen():
+    liste.extendList()
+    while(liste.getPosition() != len(blöcke.listOfBlocks)):
+        time = liste.getTime()
+        t = liste.list[-1].move(time)
+        if t == "kill":
+            print("kill")
+            a = liste.list[-1]
+            liste.list.pop()
+            liste.list[-1].zuWarten = liste.list[-1].zuWarten + a.zuWarten
+            liste.list[-1].setBack()
 
-liste.extendList()
-while(liste.getPosition() != len(blöcke.listOfBlocks)):
-    time = liste.getTime()
-    t = liste.list[-1].move(time)
-    if t == "kill":
-        print("kill")
-        a = liste.list[-1]
-        liste.list.pop()
-        liste.list[-1].zuWarten = liste.list[-1].zuWarten + a.zuWarten
-        liste.list[-1].setBack()
-
-    elif t == "moved":
-        liste.extendList()
+        elif t == "moved":
+            liste.extendList()
+            
         
-     
-    
-print("finall")
-print("position: ",liste.getPosition())
-for i in range(len(liste.list)):
-    print("Warten:", liste.list[i].warten, " Bewegt: " ,liste.list[i].bewegt,"zuWarten:",liste.list[i].zuWarten,"Position: ",liste.list[i].position )
-    
-print("Länge Liste: ",len(liste.list))
+        
+    print("finall")
+    print("position: ",liste.getPosition())
+    for i in range(len(liste.list)):
+        print("Warten:", liste.list[i].warten, " Bewegt: " ,liste.list[i].bewegt,"zuWarten:",liste.list[i].zuWarten,"Position: ",liste.list[i].position )
+        
+    print("Länge Liste: ",len(liste.list))
+    print(liste.getTime())
 
+ausführen()

@@ -17,8 +17,8 @@ class ListBlocks:
 
     @classmethod
     def checkStatusFromTo(self,start,end,time):
-        if time == 0:
-            return False
+        # if time == 0:
+        #     return False
         x = end  - start
         for i in range(x):
             if self.listOfBlocks[start + i].checkStatues(int(time)) == False:

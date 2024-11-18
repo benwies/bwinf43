@@ -39,7 +39,7 @@ class Aktion(ListeAktionen, ListBlocks):
         if self.position == 0:
             return True
         else:
-            if ListBlocks.checkStatusAt(self.position-1,time) == False :
+            if ListBlocks.checkStatusAt(self.position,time) == False :
                 return False
             else:
                 return True
