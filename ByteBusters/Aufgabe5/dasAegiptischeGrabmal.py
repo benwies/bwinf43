@@ -2,46 +2,39 @@ import ListeAktionen as la
 import ListeBloecke as lb 
 import Block as bl
 import Aktion as ak
-
+import DateiEinlesen
 liste = la.ListeAktionen() 
 blöcke = lb.ListBlocks()
-blöcke.addBlock(5)
-blöcke.addBlock(8)
-blöcke.addBlock(17)
 
 
 
-# test = la.ListeAktionen()
-# test.extendList()
-# test.list[-1].zuWarten = 1
-# test.list[-1].move(0)
-# for i in range(len(test.list)):
-#     print("Warten: ",test.list[-1].warten)
+def einlesenBlöcke():
+    for i in DateiEinlesen.lese_datei_ohne_erste_zeile():
+        blöcke.addBlock(int(i))
 
-
-
-
-
-liste.extendList()
-while(liste.getPosition() != len(blöcke.listOfBlocks)):
-    time = liste.getTime()
-    t = liste.list[-1].move(time)
-    if t == "kill":
-        print("kill")
-        a = liste.list[-1]
-        liste.list.pop()
-        liste.list[-1].zuWarten = liste.list[-1].zuWarten + a.zuWarten
-        liste.list[-1].setBack()
-
-    elif t == "moved":
-        liste.extendList()
-        
-     
+def ausführen():
     
-print("finall")
-print("position: ",liste.getPosition())
-for i in range(len(liste.list)):
-    print("Warten:", liste.list[i].warten, " Bewegt: " ,liste.list[i].bewegt,"zuWarten:",liste.list[i].zuWarten,"Position: ",liste.list[i].position )
+    einlesenBlöcke()
     
-print("Länge Liste: ",len(liste.list))
+    liste.extendList()
+    #Eigentlicher Algoritmus starte hier
+    while(liste.getPosition() != len(blöcke.listOfBlocks)):
+        time = liste.getTime()
+        t = liste.list[-1].move(time)
+        if t == "kill":
+            a = liste.list[-1]
+            liste.list.pop()
+            liste.list[-1].zuWarten = liste.list[-1].zuWarten + a.zuWarten
+            liste.list[-1].setBack()
 
+        elif t == "bewegt":
+            liste.extendList()
+            
+    liste.list.pop()
+    
+    print("Der Weg der Gegangen werden muss lautet")
+    for i in range(len(liste.list)):
+        print("Warte für", liste.list[i].warten,"Minuten.", "Gehe dann " ,liste.list[i].bewegt, "Blöcke weit" )
+
+
+ausführen()

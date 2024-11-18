@@ -1,5 +1,3 @@
-import Block as bl
-import ListeAktionen as la
 from ListeBloecke import ListBlocks 
 
 class Aktion():
@@ -30,8 +28,7 @@ class Aktion():
                 ownTime = ownTime + 1
         self.bewegt = self.zuWarten
         return "bewegt"    
-        # time = time + 1
-
+    
 #return True wenn der Block zerdrücks und False wenn nicht.
     def checkForKill(self,time):
         if self.position == 0:

@@ -17,6 +17,7 @@ def ausführen():
     einlesenBlöcke()
     
     liste.extendList()
+    #Eigentlicher Algoritmus starte hier
     while(liste.getPosition() != len(blöcke.listOfBlocks)):
         time = liste.getTime()
         t = liste.list[-1].move(time)

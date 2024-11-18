@@ -1,4 +1,3 @@
-
 import Block as bl
 
 
@@ -10,15 +9,15 @@ class ListBlocks:
 
 
 
-    def addBlock(self,intervall):
-        block = bl.Block(intervall)
+    def addBlock(self,interval):
+        block = bl.Block(interval)
         self.listOfBlocks.append(block)
 
 
     @classmethod
     def checkStatusFromTo(self,start,end,time):
-        if time == 0:
-            return False
+        # if time == 0:
+        #     return False
         x = end  - start
         for i in range(x):
             if self.listOfBlocks[start + i].checkStatues(int(time)) == False:
