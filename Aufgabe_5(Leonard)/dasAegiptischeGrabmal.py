@@ -29,10 +29,11 @@ def ausführen():
         elif t == "bewegt":
             liste.extendList()
             
-        
+    liste.list.pop()
+    
     print("Der Weg der Gegangen werden muss lautet")
     for i in range(len(liste.list)):
-        print("Warte für", liste.list[i].warten,"minuten.", "Gehe dann " ,liste.list[i].bewegt, "Blöcke weit" )
+        print("Warte für", liste.list[i].warten,"Minuten.", "Gehe dann " ,liste.list[i].bewegt, "Blöcke weit" )
 
 
 ausführen()
