@@ -37,7 +37,7 @@ class Aktion():
         if self.position == 0:
             return False
         else:
-            if ListBlocks.checkStatusAt(self.position,time) == True :
+            if ListBlocks.checkStatusAt(self.position-1,time) == True :
                 return False
             else:
                 return True
